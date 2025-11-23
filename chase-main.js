@@ -1,7 +1,6 @@
 // Main Application
 let scene, camera, renderer;
-let sonic, roadRunner, terrain, forest, desert, effects;
-let cameraController;
+let sonic, roadRunner, terrain, forest, desert, effects, bannerBird;
 let chaseDistance = 10;
 let currentDistance = 0;
 let clock;
@@ -14,15 +13,13 @@ function init() {
             updateLoadingProgress(0, "Error: THREE.js not loaded");
             return;
         }
+        updateLoadingProgress(20, "Building terrain...");
 
-        // Update loading progress
-        updateLoadingProgress(10, "Creating scene...");
-
-        // Scene setup
+        // Initialize scene
         scene = new THREE.Scene();
         scene.fog = new THREE.Fog(0x89cff0, 50, 200);
 
-        // Camera
+        // Initialize camera
         camera = new THREE.PerspectiveCamera(
             75,
             window.innerWidth / window.innerHeight,
@@ -31,20 +28,13 @@ function init() {
         );
         camera.position.set(0, 8, 15);
 
-        // Renderer
-        renderer = new THREE.WebGLRenderer({
-            canvas: document.getElementById('canvas3d'),
-            antialias: true,
-            alpha: false
-        });
+        // Initialize renderer
+        const canvas = document.getElementById('canvas3d');
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1.2;
-
-        updateLoadingProgress(20, "Building terrain...");
 
         // Create terrain and road
         terrain = new TerrainSystem(scene);
@@ -68,6 +58,8 @@ function init() {
 
         roadRunner = new RoadRunnerCharacter(scene);
         roadRunner.setPosition(0, 1, -5);
+        // Create banner bird
+        bannerBird = new BannerBird(scene);
 
         updateLoadingProgress(85, "Adding effects...");
 
@@ -181,6 +173,10 @@ function animate() {
     }
 
     // Render
+    // Update banner bird animation
+    if (typeof bannerBird !== 'undefined' && bannerBird) {
+        bannerBird.update(deltaTime);
+    }
     renderer.render(scene, camera);
 }
 

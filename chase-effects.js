@@ -157,7 +157,7 @@ class CameraController {
     }
 
     toggleMode() {
-        this.cameraMode = (this.cameraMode + 1) % 3;
+        this.cameraMode = (this.cameraMode + 1) % 4;
 
         switch (this.cameraMode) {
             case 0: // Behind
@@ -171,6 +171,10 @@ class CameraController {
             case 2: // Front
                 this.offset.set(0, 5, -15);
                 this.lookAtOffset.set(0, 2, 10);
+                break;
+            case 3: // Wide Side (Shows both)
+                this.offset.set(25, 8, -5); // Side and slightly back from midpoint
+                this.lookAtOffset.set(0, 2, -5); // Look at midpoint between Sonic (0) and RR (-10)
                 break;
         }
     }
