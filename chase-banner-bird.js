@@ -156,7 +156,7 @@ class BannerBird {
         this.bannerGeometry = bannerGeometry;
     }
 
-    update(deltaTime) {
+    update(deltaTime, playerPosition) {
         if (!this.active) return;
 
         this.time += deltaTime;
@@ -168,23 +168,30 @@ class BannerBird {
             return;
         }
 
-        // Move bird from right to left
-        const speed = 25; // Units per second
-        this.group.position.x -= speed * deltaTime;
+        // Move bird from right to left RELATIVE TO PLAYER
+        const flySpeed = 30; // Units per second
+        const startOffset = 60; // Start 60 units to the right
 
-        // Bob up and down slightly
-        this.birdGroup.position.y = Math.sin(this.time * 3) * 0.3;
+        // Calculate X position based on time
+        const currentXOffset = startOffset - (this.time * flySpeed);
+
+        // Update position relative to player
+        // Keep Z aligned with player so it doesn't get left behind
+        // Add slight Z offset to be in front of camera
+        this.group.position.x = playerPosition.x + currentXOffset;
+        this.group.position.y = playerPosition.y + 15 + Math.sin(this.time * 3) * 0.5; // Bobbing
+        this.group.position.z = playerPosition.z - 5; // Slightly ahead of Sonic
 
         // Flap wings
-        const flapAngle = Math.sin(this.time * 8) * 0.6;
+        const flapAngle = Math.sin(this.time * 15) * 0.6; // Faster flapping
         this.leftWing.rotation.z = flapAngle;
         this.rightWing.rotation.z = -flapAngle;
 
         // Animate banner with wind/whirl effects
         this.animateBanner();
 
-        // Remove from scene when off-screen
-        if (this.group.position.x < -150) {
+        // Remove from scene when off-screen (far left)
+        if (currentXOffset < -60) {
             this.active = false;
             this.group.visible = false;
         }

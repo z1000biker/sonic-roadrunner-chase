@@ -173,7 +173,7 @@ class CameraController {
                 this.lookAtOffset.set(0, 2, 10);
                 break;
             case 3: // Wide Side (Shows both)
-                this.offset.set(25, 8, -5); // Side and slightly back from midpoint
+                this.offset.set(35, 10, -5); // Side and slightly back from midpoint
                 this.lookAtOffset.set(0, 2, -5); // Look at midpoint between Sonic (0) and RR (-10)
                 break;
         }

@@ -175,7 +175,7 @@ function animate() {
     // Render
     // Update banner bird animation
     if (typeof bannerBird !== 'undefined' && bannerBird) {
-        bannerBird.update(deltaTime);
+        bannerBird.update(deltaTime, sonic.getPosition());
     }
     renderer.render(scene, camera);
 }
