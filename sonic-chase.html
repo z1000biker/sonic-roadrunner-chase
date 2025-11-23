@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Chasing Road Runner - 3D Chase Scene</title>
+    <meta name="description"
+        content="An immersive 3D scene featuring Sonic the Hedgehog chasing Road Runner through forests and deserts">
+    <link rel="stylesheet" href="sonic-chase.css">
+</head>
+
+<body>
+    <div id="loading-screen">
+        <div class="loading-content">
+            <h1>Loading Chase Scene...</h1>
+            <div class="loading-bar">
+                <div class="loading-progress" id="loading-progress"></div>
+            </div>
+            <p id="loading-text">Initializing 3D environment...</p>
+        </div>
+    </div>
+
+    <canvas id="canvas3d"></canvas>
+
+    <div id="controls-info">
+        <p><strong>Controls:</strong> Camera follows the chase automatically</p>
+        <p>Press <kbd>Space</kbd> to toggle camera angle</p>
+    </div>
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.138.3/three.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="chase-effects.js"></script>
+    <script src="chase-sonic.js"></script>
+    <script src="chase-roadrunner.js"></script>
+    <script src="chase-terrain.js"></script>
+    <script src="chase-forest.js"></script>
+    <script src="chase-desert.js"></script>
+    <script src="chase-main.js"></script>
+</body>
+
+</html>
